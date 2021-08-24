@@ -38,7 +38,7 @@ func (p *Pool) Acquire() (io.Closer, error) {
 	select {
 	// 检查是否有空闲资源
 	case r, ok := <-p.resources:
-		log.Println("Acquire: ", "Shared Resource")
+		log.Println("Acquire: ", "Shared ResourceShared Resource")
 		if !ok {
 			return nil, ErrPoolClosed
 		}
