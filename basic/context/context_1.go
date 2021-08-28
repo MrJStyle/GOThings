@@ -25,20 +25,23 @@ func doSomethingWithContext(ctx context.Context) {
 	case <-ctx.Done():
 		err := ctx.Err()
 		if err != nil {
+			fmt.Println("Timeout")
 			fmt.Println(err.Error())
 		}
 	}
 }
 
 func main() {
+	var ctx context.Context
 	// 创建空context的两种方法
-	ctx := context.Background() // 返回一个空的context，不能被cancel，kv为空
+	ctx = context.Background() // 返回一个空的context，不能被cancel，kv为空
 
 	//todoCtx := context.TODO()
-	ctx, cancel := context.WithCancel(ctx)
+	var cancel func()
+	ctx, cancel = context.WithCancel(ctx)
 
 	go func() {
-		time.Sleep(3 * time.Second)
+		time.Sleep(2 * time.Second)
 		cancel()
 	}()
 

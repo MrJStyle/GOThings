@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,7 +10,8 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("handle start!")
-	ctx := r.Context()
+	var ctx context.Context
+	ctx = r.Context()
 
 	complete := make(chan struct{})
 
@@ -25,6 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case <-ctx.Done():
 		err := ctx.Err()
 		if err != nil {
+			fmt.Println("context deadline exceeded, cancel")
 			fmt.Println(err.Error())
 		}
 	}
